@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Question Answering System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* CSS styles to control paragraph width */
+        p {
+            max-width: 600px; /* Adjust this value as needed */
+            margin: 0 auto; /* Center the paragraph */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2><b>Cognitive Inference Through Visual Analysis</b></h2>
+        <h3>T. Harshitha, Sk. Dil Nawaz Farida, N. Sahithi Sri, P. Shiromani, N. Srilekha</h3>
+        <h3>Guide: V.Asha</h3>
+        <br>
+        <p>Our multimodal VQA model combines both textual and visual information to generate answers to questions about images. The model architecture consists of two primary components: a text encoder and an image encoder. The text encoder utilizes a pre-trained BERT model to encode the textual input, while the image encoder employs a pre-trained ViT model to encode the visual input. These en-codings are then fused to generate a joint representation of the input data. Finally, a linear layer with softmax activation is used to predict the probability distri-bution over possible answers.</p>
+        <h3><b>Model Architecture</b></h3>
+        <img src="{{ url_for('static', filename='architecture.png') }}" alt="Model Architecture" width="600"><br><br>
+        <h3><b>Sample Result</b></h3>
+        <img src="{{ url_for('static', filename='sample_results.png') }}" alt="Sample resultz" width="400"><br><br>
+        
+        <h3><b>Try it out!</b></h3>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <label for="image">Upload an image:</label>
+            <input type="file" id="image" name="image" required><br><br>
+            
+            <label for="question">Enter your question:</label>
+            <input type="text" id="question" name="question" required><br><br>
+            
+            <input type="submit" value="Get Answer">
+        </form>
+
+        {% if answer %}
+            <div id="result">
+                <h3>Your Uploaded Image:</h3>
+                {% if image_data %}
+                    <img id="uploaded-image" src="{{ image_data }}" alt="Uploaded Image"><br><br>
+                {% endif %}
+
+                <h3>Your Question:</h3>
+                <p>{{ question }}</p>
+
+                <div id="answer">
+                    <h3>Answer:</h3>
+                    <p>{{ answer }}</p>
+                </div>
+
+                {% if pie_chart %}
+                    <h3>Confidence Levels:</h3>
+                    <img width = 500px src="{{ pie_chart }}" alt="Confidence Levels">
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
